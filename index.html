@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Featured Speakers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+</head>
+
+<body class="bg-gray-100">
+    <section class="container mx-auto py-8 min-h-[100vh] content-center">
+        <h2 class="text-3xl font-bold text-center mb-4">View our Featured Speakers for the Event</h2>
+        <p class="text-center mb-8">Speakers are core contributors and industry thought leaders working at companies
+            that push for innovation.</p>
+        <div id="popover-modal" class="hidden inset-0 m-12 flex items-center justify-center">
+            <div class="bg-white  p-4 rounded-lg shadow-lg relative">
+                <button onclick="closeModal()" class="absolute top-0 right-0 text-xl font-semibold p-2">
+                    &times;
+                </button>
+                <div id="modal-content">
+                  
+                </div>
+            </div>
+        </div>
+        <div class="relative">
+            <div class="flex gap-4 overflow-x-auto justify-center pb-4">
+
+                 <!-- Speaker 1 -->
+                <div class="w-[220px] p-4 bg-white shadow-lg rounded-lg cursor-pointer card1"
+                    onclick="getCardData('card1')" data-id="1">
+                    <div class="rounded-full mx-auto w-24 h-24 mb-4 overflow-hidden">
+                        <img class="min-h-full min-w-full" class="image" src="./assets/img1.jpg" alt="Speaker 1">
+                    </div>
+                    <h3 class="text-center font-semibold title">John Doe</h3>
+                    <p class="text-center text-sm text-gray-500 role">Chief Marketing Officer</p>
+                    <p class="text-center text-xs text-gray-400 company">Acme Corp</p>
+                </div>
+
+                <!-- Speaker 2 -->
+                <div class="w-[220px] p-4 bg-white shadow-lg rounded-lg cursor-pointer card2"
+                    onclick="getCardData('card2')" data-id="2">
+                    <div class="rounded-full mx-auto w-24 h-24 mb-4 overflow-hidden">
+                        <img class="min-h-full min-w-full" class="image" src="./assets/img2.jpg" alt="Speaker 2">
+                    </div>
+                    <h3 class="text-center font-semibold title">John Doe</h3>
+                    <p class="text-center text-sm text-gray-500 role">Chief Engagement Officer</p>
+                    <p class="text-center text-xs text-gray-400 company">Acquia</p>
+                </div>
+
+                <!-- Speaker 3 -->
+                <div class="w-[220px] p-4 bg-white shadow-lg rounded-lg cursor-pointer card3"
+                    onclick="getCardData('card3')" data-id="3">
+                    <div class="rounded-full mx-auto w-24 h-24 mb-4 overflow-hidden">
+                        <img class="min-h-full min-w-full" class="image" src="./assets/img3.jpg" alt="Speaker 3">
+                    </div>
+                    <h3 class="text-center font-semibold title">John Doe</h3>
+                    <p class="text-center text-sm text-gray-500 role">Chief Technical Developer</p>
+                    <p class="text-center text-xs text-gray-400 company">Acme Corp</p>
+                </div>
+
+                <!-- Speaker 4 -->
+                <div class="w-[220px] p-4 bg-white shadow-lg rounded-lg cursor-pointer card4"
+                    onclick="getCardData('card4')" data-id="4">
+                    <div class="rounded-full mx-auto w-24 h-24 mb-4 overflow-hidden">
+                        <img class="min-h-full min-w-full" class="image" src="./assets/img4.jpg" alt="Speaker 4">
+                    </div>
+                    <h3 class="text-center font-semibold title">John Doe</h3>
+                    <p class="text-center text-sm text-gray-500 role">Chief Marketing Officer</p>
+                    <p class="text-center text-xs text-gray-400 company">Acme Corp</p>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="flex justify-center items-center m-12">
+            <button class="bg-blue-700 text-white border rounded-md px-12 py-2">See the Program</button>
+        </div>
+
+    </section>
+
+    <script>
+        
+
+       function getCardData(cardClass) {
+            const card = document.querySelector(`.${cardClass}`);
+            const imgSrc = card.querySelector('img').src;
+            const title = card.querySelector('.title').innerText;
+            const role = card.querySelector('.role').innerText;
+            const company = card.querySelector('.company').innerText;
+
+            const cardData = {
+                imgSrc: imgSrc,
+                title: title,
+                role: role,
+                company: company
+            };
+            const modal = document.getElementById("popover-modal");
+            const modalContent = document.getElementById("modal-content");
+
+
+            modalContent.innerHTML = `
+              <div class="flex justify-center items-center bg-white pt-3">
+                        <div class="flex justify-center items-center">
+                            <div class="rounded-full mx-auto w-24 h-24 mb-4 overflow-hidden">
+                                <img class="min-h-full min-w-full" class="image" src="${cardData.imgSrc}"
+                                    alt="Speaker 1">
+                            </div>
+                            <div class="m-4">
+                                <div class="font-bold text-xl">${cardData.title}</div>
+                                <div class="font-semibold ">${cardData.role}</div>
+                                <div class="text-sm text-gray-500">${cardData.company}</div>
+                            </div>
+                        </div>
+                        <div class="h-[200px] w-[2px] bg-gray-300"></div>
+                        <div class="w-[400px] ml-2">Monotonectally synergize business communities rather than
+                            client-centric convergence. Assertively unleash cross-platform best practices rather than
+                            pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0
+                            mindshare. Dramatically pursue real-time markets through e-business strategic theme areas.
+                        </div>
+                    </div>
+                    `
+                    modal.classList.remove("hidden");
+
+        }
+        
+        function closeModal(){
+            const modal = document.getElementById("popover-modal");
+            modal.classList.add("hidden");
+        }
+    
+    </script>
+</body>
+
+</html>

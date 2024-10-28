@@ -5,132 +5,269 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Featured Speakers</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+    <style>
+        body {
+            background-color: #FFF;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            padding: 2rem;
+            margin: 0 auto;
+        }
+
+        .content-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #6b7280;
+        }
+
+        .modal {
+            display: none;
+            inset: 0;
+            margin: 3rem;
+            width: 75%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 4px 4px 14px #e6e6e6;
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 1.25rem;
+            font-weight: bold;
+            padding: 0.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #6b7280;
+        }
+
+        .card-container {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            justify-content: center;
+            padding-bottom: 1rem;
+            padding: 20px;
+        }
+
+        .card {
+            width: 220px;
+            padding: 1rem;
+            background-color: #ffffff;
+            box-shadow: 4px 4px 14px #e6e6e6;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 1rem auto;
+        }
+
+        .image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-title {
+            font-weight: 600;
+        }
+
+        .role {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .company {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .button {
+            background-color: #1a48c5;
+            color: #ffffff;
+            margin-top: 20px;
+            border-radius: 0.375rem;
+            padding: 0.7rem 3rem;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        
+        .modal-flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 0.75rem;
+            background-color: #ffffff;
+        }
+        
+        .modal-details {
+            display: flex;
+            align-items: center;
+            margin-left: 1rem;
+        }
+
+        .details{
+            margin: 12px;
+        }
+
+        .bio-divider {
+            width: 2px;
+            height: 200px;
+            background-color: #d1d5db;
+        }
+
+        .bio-text {
+            width: 400px;
+            margin-left: 0.5rem;
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+
+        .modal-enter {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .modal-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal-leave {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .modal-leave-active {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100">
-    <section class="container mx-auto py-8 min-h-[100vh] content-center">
-        <h2 class="text-3xl font-bold text-center mb-4">View our Featured Speakers for the Event</h2>
-        <p class="text-center mb-8">Speakers are core contributors and industry thought leaders working at companies
-            that push for innovation.</p>
-        <div id="popover-modal" class="hidden inset-0 m-12 flex items-center justify-center">
-            <div class="bg-white  p-4 rounded-lg shadow-lg relative">
-                <button onclick="closeModal()" class="absolute top-0 right-0 text-xl font-semibold p-2">
-                    &times;
-                </button>
-                <div id="modal-content">
-                  
-                </div>
+<body>
+    <section class="container content-center">
+        <h2 class="section-title">View our Featured Speakers for the Event</h2>
+        <p class="section-description">Speakers are core contributors and industry thought leaders working at companies that push for innovation.</p>
+        <div id="popover-modal" class="modal">
+            <div class="modal-content">
+                <button onclick="closeModal()" class="modal-close-btn">&times;</button>
+                <div id="modal-content"></div>
             </div>
         </div>
-        <div class="relative">
-            <div class="flex gap-4 overflow-x-auto justify-center pb-4">
-
-                 <!-- Speaker 1 -->
-                <div class="w-[220px] p-4 bg-white shadow-lg rounded-lg cursor-pointer card1"
-                    onclick="getCardData('card1')" data-id="1">
-                    <div class="rounded-full mx-auto w-24 h-24 mb-4 overflow-hidden">
-                        <img class="min-h-full min-w-full" class="image" src="./assets/img1.jpg" alt="Speaker 1">
-                    </div>
-                    <h3 class="text-center font-semibold title">John Doe</h3>
-                    <p class="text-center text-sm text-gray-500 role">Chief Marketing Officer</p>
-                    <p class="text-center text-xs text-gray-400 company">Acme Corp</p>
+        <div class="card-container">
+            <div class="card card1" onclick="getCardData('card1')" data-id="1">
+                <div class="avatar">
+                    <img src="./assets/img1.jpg" alt="Speaker 1" class="image">
                 </div>
-
-                <!-- Speaker 2 -->
-                <div class="w-[220px] p-4 bg-white shadow-lg rounded-lg cursor-pointer card2"
-                    onclick="getCardData('card2')" data-id="2">
-                    <div class="rounded-full mx-auto w-24 h-24 mb-4 overflow-hidden">
-                        <img class="min-h-full min-w-full" class="image" src="./assets/img2.jpg" alt="Speaker 2">
-                    </div>
-                    <h3 class="text-center font-semibold title">John Doe</h3>
-                    <p class="text-center text-sm text-gray-500 role">Chief Engagement Officer</p>
-                    <p class="text-center text-xs text-gray-400 company">Acquia</p>
+                <h3 class="card-title">John Doe</h3>
+                <p class="role">Chief Marketing Officer</p>
+                <p class="company">Acme Corp</p>
+            </div>
+            <div class="card card2" onclick="getCardData('card2')" data-id="2">
+                <div class="avatar">
+                    <img src="./assets/img2.jpg" alt="Speaker 2" class="image">
                 </div>
-
-                <!-- Speaker 3 -->
-                <div class="w-[220px] p-4 bg-white shadow-lg rounded-lg cursor-pointer card3"
-                    onclick="getCardData('card3')" data-id="3">
-                    <div class="rounded-full mx-auto w-24 h-24 mb-4 overflow-hidden">
-                        <img class="min-h-full min-w-full" class="image" src="./assets/img3.jpg" alt="Speaker 3">
-                    </div>
-                    <h3 class="text-center font-semibold title">John Doe</h3>
-                    <p class="text-center text-sm text-gray-500 role">Chief Technical Developer</p>
-                    <p class="text-center text-xs text-gray-400 company">Acme Corp</p>
+                <h3 class="card-title">John Doe</h3>
+                <p class="role">Chief Engagement Officer</p>
+                <p class="company">Acquia</p>
+            </div>
+            <div class="card card3" onclick="getCardData('card3')" data-id="3">
+                <div class="avatar">
+                    <img src="./assets/img3.jpg" alt="Speaker 3" class="image">
                 </div>
-
-                <!-- Speaker 4 -->
-                <div class="w-[220px] p-4 bg-white shadow-lg rounded-lg cursor-pointer card4"
-                    onclick="getCardData('card4')" data-id="4">
-                    <div class="rounded-full mx-auto w-24 h-24 mb-4 overflow-hidden">
-                        <img class="min-h-full min-w-full" class="image" src="./assets/img4.jpg" alt="Speaker 4">
-                    </div>
-                    <h3 class="text-center font-semibold title">John Doe</h3>
-                    <p class="text-center text-sm text-gray-500 role">Chief Marketing Officer</p>
-                    <p class="text-center text-xs text-gray-400 company">Acme Corp</p>
+                <h3 class="card-title">John Doe</h3>
+                <p class="role">Chief Technical Developer</p>
+                <p class="company">Acme Corp</p>
+            </div>
+            <div class="card card4" onclick="getCardData('card4')" data-id="4">
+                <div class="avatar">
+                    <img src="./assets/img4.jpg" alt="Speaker 4" class="image">
                 </div>
-
-
+                <h3 class="card-title">John Doe</h3>
+                <p class="role">Chief Marketing Officer</p>
+                <p class="company">Acme Corp</p>
             </div>
         </div>
-
-        <div class="flex justify-center items-center m-12">
-            <button class="bg-blue-700 text-white border rounded-md px-12 py-2">See the Program</button>
+        <div class="button-container">
+            <button class="button">See the Program</button>
         </div>
-
     </section>
 
     <script>
-        
-
-       function getCardData(cardClass) {
+        function getCardData(cardClass) {
             const card = document.querySelector(`.${cardClass}`);
             const imgSrc = card.querySelector('img').src;
-            const title = card.querySelector('.title').innerText;
+            const title = card.querySelector('.card-title').innerText;
             const role = card.querySelector('.role').innerText;
             const company = card.querySelector('.company').innerText;
 
-            const cardData = {
-                imgSrc: imgSrc,
-                title: title,
-                role: role,
-                company: company
-            };
             const modal = document.getElementById("popover-modal");
             const modalContent = document.getElementById("modal-content");
 
-
             modalContent.innerHTML = `
-              <div class="flex justify-center items-center bg-white pt-3">
-                        <div class="flex justify-center items-center">
-                            <div class="rounded-full mx-auto w-24 h-24 mb-4 overflow-hidden">
-                                <img class="min-h-full min-w-full" class="image" src="${cardData.imgSrc}"
-                                    alt="Speaker 1">
-                            </div>
-                            <div class="m-4">
-                                <div class="font-bold text-xl">${cardData.title}</div>
-                                <div class="font-semibold ">${cardData.role}</div>
-                                <div class="text-sm text-gray-500">${cardData.company}</div>
-                            </div>
+                <div class="modal-flex">
+                    <div class="modal-details">
+                        <div class="avatar">
+                            <img src="${imgSrc}" alt="Speaker Image" class="image">
                         </div>
-                        <div class="h-[200px] w-[2px] bg-gray-300"></div>
-                        <div class="w-[400px] ml-2">Monotonectally synergize business communities rather than
-                            client-centric convergence. Assertively unleash cross-platform best practices rather than
-                            pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0
-                            mindshare. Dramatically pursue real-time markets through e-business strategic theme areas.
+                        <div class='details'>
+                            <div class="card-title">${title}</div>
+                            <div class="role">${role}</div>
+                            <div class="company">${company}</div>
                         </div>
                     </div>
-                    `
-                    modal.classList.remove("hidden");
+                    <div class="bio-divider"></div>
+                    <div class="bio-text">Monotonectally synergize business communities rather than
+                            client-centric convergence. Assertively unleash cross-platform best practices rather than
+                            pandemic total linkage. Synergistically monetize parallel infomediaries whereas 2.0
+                            mindshare. Dramatically pursue real-time markets through e-business strategic theme areas.</div>
+                </div>
+            `;
+            modal.style.display = 'flex';
+        }
 
-        }
-        
-        function closeModal(){
+        function closeModal() {
             const modal = document.getElementById("popover-modal");
-            modal.classList.add("hidden");
+            modal.style.display = 'none';
         }
-    
     </script>
 </body>
 
